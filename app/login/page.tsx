@@ -3,7 +3,6 @@
 import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Check, Eye, EyeOff, Mail, Lock, Loader2, KeyRound, Building2, User } from "lucide-react";
-import Logo from "@/components/Logo";
 import { createClient } from "@/lib/supabase-browser";
 
 const CHECKLIST = ["現場に役立つ情報", "すぐに使える指導案・教材", "AIによるなんでも相談"];
@@ -95,8 +94,7 @@ function LoginPageInner() {
     <div className="grid min-h-screen grid-cols-1 md:grid-cols-2">
       <div className="relative flex flex-col justify-between bg-gradient-to-b from-skyish to-mint p-10">
         <div>
-          <Logo subtitle={false} />
-          <h2 className="mt-10 text-2xl font-bold leading-snug text-ink">
+          <h2 className="text-2xl font-bold leading-snug text-ink">
             学ぶ。つながる。
             <br />
             子どもたちの、
