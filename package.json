@@ -1,0 +1,37 @@
+{
+  "name": "gensai-hinan-chatbot",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "predev": "node scripts/build-knowledge.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/build-knowledge.mjs",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "node scripts/prepare-font.js"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.116.0",
+    "docx": "^8.5.0",
+    "lucide-react": "^0.427.0",
+    "next": "^14.2.35",
+    "openai": "^4.55.0",
+    "pdfkit": "^0.20.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tar": "^7.5.22",
+    "wawoff2": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.15",
+    "@types/pdfkit": "^0.17.6",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.4"
+  }
+}
