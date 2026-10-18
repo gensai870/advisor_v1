@@ -94,7 +94,15 @@ function LoginPageInner() {
     <div className="grid min-h-screen grid-cols-1 md:grid-cols-2">
       <div className="relative flex flex-col justify-between bg-gradient-to-b from-skyish to-mint p-10">
         <div>
-          <h2 className="text-2xl font-bold leading-snug text-ink">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="乳幼児防災AIアドバイザー"
+            width={1000}
+            height={268}
+            className="h-auto w-64 max-w-full sm:w-72"
+          />
+          <h2 className="mt-8 text-2xl font-bold leading-snug text-ink">
             学ぶ。つながる。
             <br />
             子どもたちの、
@@ -111,16 +119,6 @@ function LoginPageInner() {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="mt-8 flex items-end justify-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo.png"
-            alt="乳幼児防災AIアドバイザー"
-            width={900}
-            height={602}
-            className="h-auto w-44 max-w-full sm:w-52 md:w-64"
-          />
         </div>
       </div>
 
