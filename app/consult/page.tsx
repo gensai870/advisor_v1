@@ -80,21 +80,21 @@ export default function ConsultPage() {
 
   return (
     <AppShell>
-      <div className="flex h-[calc(100vh-64px)] flex-col">
-        <div className="flex items-center justify-between border-b border-black/5 bg-white px-6 py-3">
-          <div>
+      <div className="flex h-[calc(100dvh-64px)] flex-col">
+        <div className="flex shrink-0 items-center justify-between gap-2 border-b border-black/5 bg-white px-4 py-3 sm:px-6">
+          <div className="min-w-0">
             <p className="text-sm font-bold text-ink">なんでも相談チャット</p>
-            <p className="text-[11px] text-ink-soft">減災教育・避難訓練2.0・研修運営について相談できます</p>
+            <p className="text-[11px] leading-snug text-ink-soft">減災教育・避難訓練2.0・研修運営について相談できます</p>
           </div>
           <button
             onClick={() => setMessages([])}
-            className="flex items-center gap-1 rounded-full border border-mint-dark bg-mint px-3 py-1.5 text-xs font-semibold text-ink hover:brightness-95"
+            className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full border border-mint-dark bg-mint px-3 py-1.5 text-xs font-semibold text-ink hover:brightness-95"
           >
             <Plus size={14} /> 新しい相談
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-6 py-5">
+        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">
           <div className="mx-auto max-w-2xl space-y-4">
             {display.map((m, i) => (
               <div key={i} className={`flex gap-3 ${m.role === "user" ? "flex-row-reverse" : ""}`}>
@@ -104,7 +104,7 @@ export default function ConsultPage() {
                   </span>
                 )}
                 <div
-                  className={`max-w-[80%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm ${
+                  className={`max-w-[85%] whitespace-pre-wrap break-words rounded-2xl px-4 py-3 text-sm leading-relaxed sm:max-w-[80%] ${
                     m.role === "user" ? "bg-coral text-white" : "bg-white text-ink shadow-sm"
                   }`}
                 >
@@ -117,7 +117,7 @@ export default function ConsultPage() {
             ))}
 
             {messages.length === 0 && (
-              <div className="ml-11">
+              <div className="sm:ml-11">
                 <p className="mb-2 text-xs font-semibold text-ink-soft">相談例</p>
                 <div className="flex flex-wrap gap-2">
                   {SUGGESTIONS.map((s) => (
@@ -145,17 +145,17 @@ export default function ConsultPage() {
           </div>
         </div>
 
-        <div className="border-t border-black/5 bg-white p-4">
+        <div className="shrink-0 border-t border-black/5 bg-white p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:p-4">
           <div className="mx-auto flex max-w-2xl items-end gap-2 rounded-2xl border border-black/10 p-2">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value.slice(0, MAX_LEN))}
               onKeyDown={handleKeyDown}
               rows={1}
-              placeholder="相談したいことを入力してください…（Shift+Enterで改行、Enterを2回で送信）"
-              className="max-h-32 flex-1 resize-none bg-transparent px-2 py-2 text-sm outline-none"
+              placeholder="相談したいことを入力…"
+              className="max-h-32 min-w-0 flex-1 resize-none bg-transparent px-2 py-2 text-base outline-none sm:text-sm"
             />
-            <span className="pb-2 text-[11px] text-ink-soft">{input.length}/{MAX_LEN}</span>
+            <span className="hidden pb-2 text-[11px] text-ink-soft sm:inline">{input.length}/{MAX_LEN}</span>
             <button
               onClick={() => send(input)}
               disabled={loading || !input.trim()}
@@ -164,8 +164,9 @@ export default function ConsultPage() {
               <ArrowUp size={16} />
             </button>
           </div>
-          <p className="mx-auto mt-2 max-w-2xl text-center text-[11px] text-ink-soft">
+          <p className="mx-auto mt-2 max-w-2xl text-center text-[10px] leading-tight text-ink-soft sm:text-[11px]">
             ※このAIは教育・保育の現場支援を目的としており、医療・法律・行政の公式見解ではありません。
+            <span className="hidden sm:inline">（Shift+Enterで改行、Enterを2回で送信）</span>
           </p>
         </div>
       </div>

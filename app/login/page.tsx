@@ -114,7 +114,16 @@ function LoginPageInner() {
             ))}
           </ul>
         </div>
-        <div className="flex items-end justify-center gap-4 text-6xl opacity-80">🏫🌳🌱</div>
+        <div className="mt-8 flex items-end justify-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="乳幼児防災AIアドバイザー"
+            width={900}
+            height={602}
+            className="h-auto w-44 max-w-full sm:w-52 md:w-64"
+          />
+        </div>
       </div>
 
       <div className="flex items-center justify-center p-8">
