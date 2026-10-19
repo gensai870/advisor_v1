@@ -96,7 +96,7 @@ function LoginPageInner() {
           src="/logo.png"
           alt="乳幼児防災AIアドバイザー 社会実装検証版"
           width={1200}
-          height={390}
+          height={417}
           className="h-auto w-64 max-w-full sm:w-80 md:w-96"
         />
         <h2 className="mt-8 text-xl font-bold leading-relaxed text-ink sm:text-2xl md:mt-12">
