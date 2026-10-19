@@ -2,10 +2,8 @@
 
 import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Check, Eye, EyeOff, Mail, Lock, Loader2, KeyRound, Building2, User } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, Loader2, KeyRound, Building2, User } from "lucide-react";
 import { createClient } from "@/lib/supabase-browser";
-
-const CHECKLIST = ["現場に役立つ情報", "すぐに使える指導案・教材", "AIによるなんでも相談"];
 
 const INVITE_CODE = "gensai_infants";
 
@@ -92,33 +90,27 @@ function LoginPageInner() {
 
   return (
     <div className="grid min-h-screen grid-cols-1 md:grid-cols-2">
-      <div className="relative flex flex-col justify-between bg-gradient-to-b from-skyish to-mint p-10">
-        <div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo.png"
-            alt="乳幼児防災AIアドバイザー"
-            width={1000}
-            height={268}
-            className="h-auto w-64 max-w-full sm:w-72"
-          />
-          <h2 className="mt-8 text-2xl font-bold leading-snug text-ink">
-            学ぶ。つながる。
-            <br />
-            子どもたちの、
-            <br />
-            より安心な未来のために。
-          </h2>
-          <ul className="mt-8 space-y-3">
-            {CHECKLIST.map((item) => (
-              <li key={item} className="flex items-center gap-2 text-sm text-ink">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-coral">
-                  <Check size={12} strokeWidth={3} />
-                </span>
-                {item}
-              </li>
-            ))}
-          </ul>
+      <div className="flex flex-col items-center justify-center bg-gradient-to-b from-skyish to-mint px-6 py-10 text-center sm:px-10 md:min-h-screen md:py-16">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt="乳幼児防災AIアドバイザー 社会実装検証版"
+          width={1200}
+          height={390}
+          className="h-auto w-64 max-w-full sm:w-80 md:w-96"
+        />
+        <h2 className="mt-8 text-xl font-bold leading-relaxed text-ink sm:text-2xl md:mt-12">
+          子どもを守りたい。
+          <br />
+          その想いを、毎日の実践へ。
+        </h2>
+        <p className="mt-5 max-w-md text-sm leading-relaxed text-ink md:text-base">
+          <span className="block">先生たちの防災の疑問や悩みに寄り添い、</span>
+          <span className="block">学びと実践をサポートします。</span>
+        </p>
+        <div className="mt-8 w-full max-w-lg rounded-2xl bg-white/70 px-4 py-4 text-xs leading-relaxed text-ink-soft md:mt-10">
+          <span className="block [text-wrap:balance]">本サービスは、保育者を対象とした実証試験を行っています。</span>
+          <span className="mt-1 block [text-wrap:balance]">現在は、実証試験にご参加いただく方のみご利用いただけます。</span>
         </div>
       </div>
 

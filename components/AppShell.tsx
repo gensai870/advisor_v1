@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -100,6 +100,15 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [menuOpen]);
+
   return (
     <div className="flex min-h-screen flex-col bg-[#F7F8F9]">
       <header className="flex items-center justify-between border-b border-black/5 bg-white px-4 py-3 md:px-6">
@@ -147,8 +156,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               onClick={() => setMenuOpen(false)}
               aria-hidden="true"
             />
-            <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85%] flex-col justify-between bg-white p-4 shadow-xl">
-              <div>
+            <div className="absolute inset-y-0 left-0 w-72 max-w-[85%] overflow-y-auto overscroll-contain bg-white p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-xl">
+              <div className="space-y-3">
                 <div className="mb-4 flex items-center justify-between">
                   <Logo subtitle={false} />
                   <button
