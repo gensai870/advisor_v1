@@ -91,27 +91,32 @@ function LoginPageInner() {
   return (
     <div className="grid min-h-screen grid-cols-1 md:grid-cols-2">
       <div className="flex flex-col items-center justify-center bg-gradient-to-b from-skyish to-mint px-6 py-10 text-center sm:px-10 md:min-h-screen md:py-16">
+        <div className="w-full max-w-lg">
+          <div className="inline-block rounded-full bg-coral px-6 py-2 text-2xl font-extrabold tracking-widest text-white shadow-md sm:text-3xl">
+            社会実装検証版
+          </div>
+          <div className="mt-4 rounded-2xl bg-white/70 px-4 py-4 text-xs leading-relaxed text-ink-soft sm:text-sm">
+            <span className="block [text-wrap:balance]">本サービスは、保育者を対象とした実証試験を行っています。</span>
+            <span className="mt-1 block [text-wrap:balance]">現在は、実証試験にご参加いただく方のみご利用いただけます。</span>
+          </div>
+        </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo.png"
-          alt="乳幼児防災AIアドバイザー 社会実装検証版"
+          alt="乳幼児防災AIアドバイザー"
           width={1200}
-          height={417}
-          className="h-auto w-64 max-w-full sm:w-80 md:w-96"
+          height={343}
+          className="mt-10 h-auto w-64 max-w-full sm:w-80 md:w-96"
         />
-        <h2 className="mt-8 text-xl font-bold leading-relaxed text-ink sm:text-2xl md:mt-12">
+        <h2 className="mt-8 text-xl font-bold leading-relaxed text-ink sm:text-2xl">
           子どもを守りたい。
           <br />
           その想いを、毎日の実践へ。
         </h2>
         <p className="mt-5 max-w-md text-sm leading-relaxed text-ink md:text-base">
-          <span className="block">先生たちの防災の疑問や悩みに寄り添い、</span>
+          <span className="block">保育者の防災の疑問や悩みに寄り添い、</span>
           <span className="block">学びと実践をサポートします。</span>
         </p>
-        <div className="mt-8 w-full max-w-lg rounded-2xl bg-white/70 px-4 py-4 text-xs leading-relaxed text-ink-soft md:mt-10">
-          <span className="block [text-wrap:balance]">本サービスは、保育者を対象とした実証試験を行っています。</span>
-          <span className="mt-1 block [text-wrap:balance]">現在は、実証試験にご参加いただく方のみご利用いただけます。</span>
-        </div>
       </div>
 
       <div className="flex items-center justify-center p-8">
