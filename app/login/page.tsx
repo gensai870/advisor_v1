@@ -112,7 +112,7 @@ function LoginPageInner() {
           <div className="inline-block rounded-full bg-coral px-6 py-2 text-2xl font-extrabold tracking-widest text-white shadow-md sm:text-3xl">
             社会実装検証版
           </div>
-          <div className="mt-4 text-xs leading-relaxed text-ink-soft sm:text-sm">
+          <div className="mt-4 text-sm leading-relaxed text-ink-soft sm:text-base">
             <span className="block [text-wrap:balance]">本サービスは、保育者を対象とした実証試験を行っています。</span>
             <span className="mt-1 block [text-wrap:balance]">現在は、実証試験にご参加いただく方のみご利用いただけます。</span>
           </div>
