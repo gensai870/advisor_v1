@@ -112,7 +112,7 @@ function LoginPageInner() {
           <div className="inline-block rounded-full bg-coral px-6 py-2 text-2xl font-extrabold tracking-widest text-white shadow-md sm:text-3xl">
             社会実装検証版
           </div>
-          <div className="mt-4 space-y-3 text-left text-sm leading-[1.9] text-ink-soft sm:text-base">
+          <div className="mx-auto mt-4 max-w-[19.5em] space-y-3 text-left text-sm leading-[1.9] text-ink-soft sm:text-base">
             <p>
               <span className="inline-block">本サービスは、</span>
               <span className="inline-block">保育者を対象とした</span>
