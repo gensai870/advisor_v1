@@ -11,6 +11,7 @@ const SYSTEM_PROMPT = `あなたは「NPO法人日本減災教育普及協会」
 「避難訓練2.0」の考え方・帳票・訓練設計・研修について、会員施設の職員からの質問に答えます。
 
 必ず守ること:
+- 「２年間計画」「１のシート」など、帳票①〜④を指すと思われる言い方は、帳票の意味で解釈する（注記がある場合はそれに従う）。「２年間」を文字どおりの2年間の計画とは解釈しない。
 - まず、続けて渡される「参考情報」に質問に関係する内容があるか確認する。関係する内容があれば、それを最優先の根拠として回答する。
 - 帳票①〜④の項目・選択肢、研修の段階・内容、教材、協会の制度・料金・日程・連絡先など、協会固有の事柄は、参考情報にない場合に一般知識で補わない。推測せず「確認できていません。協会にお尋ねください」と答える。
 - 協会固有でない一般的な保育・防災の質問で参考情報が不十分な場合は、あなた自身の一般的な知識で誠実に回答してよい。ただし、断定的すぎる医療・法律・行政の公式見解は避け、必要に応じて「詳細は専門機関・自治体にご確認ください」と添える。
@@ -33,6 +34,28 @@ const SYSTEM_PROMPT = `あなたは「NPO法人日本減災教育普及協会」
 - 「中規模/大規模の地震動」（建築基準法上の耐震設計用語）と、避難訓練2.0の「想定地震名・マグニチュード・想定震度・想定被害」は別概念なので混同しない。
 - 学校施設向けの法令・点検基準（消防法・建築基準法等）は、保育・幼児教育施設に同じ法的義務があるとは限らない点に注意して説明する。
 - 医療的な助言（体調不良時の対応の医学的妥当性など）は行わず、YURETA運営者の安全運用基準として案内するにとどめる。`;
+
+
+// 帳票番号の表記ゆれ（②/２/2、①シート/１のシート 等）を吸収する
+const FORM_NAMES: Record<string, string> = {
+  "①": "被害想定・減災設計シート",
+  "②": "年間避難訓練計画",
+  "③": "避難訓練 実施・評価・改善シート",
+  "④": "年間評価・次年度改善シート",
+};
+function normalizeFormQuery(text: string): { query: string; content: string } {
+  if (/[①②③④]/.test(text)) return { query: text, content: text };
+  const n = text.normalize("NFKC");
+  let mark: string | null = null;
+  if (/(^|[^0-9])2\s*年間\s*(避難)?\s*(訓練)?\s*計画/.test(n)) mark = "②";
+  else if (/(^|[^0-9])([134])\s*(番の|番目の|つ目の|の)?\s*(シート|帳票)/.test(n)) {
+    const d = n.match(/([134])\s*(番の|番目の|つ目の|の)?\s*(シート|帳票)/)![1];
+    mark = ({ "1": "①", "3": "③", "4": "④" } as Record<string, string>)[d];
+  }
+  if (!mark) return { query: text, content: text };
+  const note = `（※「${text}」は、帳票${mark}「${FORM_NAMES[mark]}」のことを指しています）`;
+  return { query: `${text} 帳票${mark} ${FORM_NAMES[mark]}`, content: `${text}\n${note}` };
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -57,7 +80,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "user メッセージが見つかりません。" }, { status: 400 });
     }
 
-    const contextRecords = await retrieve(client, lastUserMessage.content, 6);
+    const norm = normalizeFormQuery(lastUserMessage.content);
+    const contextRecords = await retrieve(client, norm.query, 6);
     const contextText = contextRecords
       .map(
         (r) =>
@@ -71,7 +95,7 @@ export async function POST(req: NextRequest) {
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "system", content: `参考情報:\n\n${contextText}` },
-        ...messages,
+        ...messages.map((m) => (m === lastUserMessage ? { ...m, content: norm.content } : m)),
       ],
     });
 
