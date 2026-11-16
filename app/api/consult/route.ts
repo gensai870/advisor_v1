@@ -3,6 +3,7 @@ import OpenAI from "openai";
 import { SYSTEM_PROMPT } from "@/lib/knowledge.generated.js";
 import { respond } from "@/lib/respond.js";
 import { isQuotaError, QUOTA_ERROR_CODE } from "@/lib/openai-errors";
+import { logChatToDrive } from "@/lib/drive-log";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -45,6 +46,7 @@ export async function POST(req: NextRequest) {
       },
     });
     console.log("[consult]", JSON.stringify(flags)); // 質問本文は記録しない
+    logChatToDrive("consult", messages, text);
     return NextResponse.json({ reply: text });
   } catch (err: any) {
     console.error("[consult] error", err?.status ?? "", err?.code ?? "");

@@ -80,6 +80,8 @@ function LoginPageInner() {
         return;
       }
       if (data.session) {
+        // 登録と同時に、Driveにアカウントのフォルダを作る（失敗してもログインは続ける）
+        await fetch("/api/account/init", { method: "POST" }).catch(() => {});
         router.push("/home");
         router.refresh();
       } else {

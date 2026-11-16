@@ -3,6 +3,7 @@ import OpenAI from "openai";
 import fs from "fs";
 import path from "path";
 import { isQuotaError, QUOTA_ERROR_CODE } from "@/lib/openai-errors";
+import { logChatToDrive } from "@/lib/drive-log";
 
 export const runtime = "nodejs";
 
@@ -45,6 +46,7 @@ export async function POST(req: NextRequest) {
     });
 
     const reply = completion.choices[0]?.message?.content ?? "";
+    logChatToDrive("materials-chat", messages, reply);
     return NextResponse.json({ reply });
   } catch (err: any) {
     console.error(err);

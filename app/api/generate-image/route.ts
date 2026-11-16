@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { isQuotaError, QUOTA_ERROR_CODE } from "@/lib/openai-errors";
+import { logImageToDrive } from "@/lib/drive-log";
 
 export const runtime = "nodejs";
 
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "画像の生成に失敗しました。" }, { status: 500 });
     }
 
+    logImageToDrive(prompt.trim(), b64);
     return NextResponse.json({ image: `data:image/png;base64,${b64}` });
   } catch (err: any) {
     console.error(err);

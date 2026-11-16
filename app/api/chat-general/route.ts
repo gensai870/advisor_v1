@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { isQuotaError, QUOTA_ERROR_CODE } from "@/lib/openai-errors";
+import { logChatToDrive } from "@/lib/drive-log";
 
 export const runtime = "nodejs";
 
@@ -40,6 +41,7 @@ export async function POST(req: NextRequest) {
     });
 
     const reply = completion.choices[0]?.message?.content ?? "";
+    logChatToDrive("chat-general", messages, reply);
     return NextResponse.json({ reply });
   } catch (err: any) {
     console.error(err);
