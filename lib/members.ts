@@ -4,10 +4,16 @@ import { SUPABASE_URL } from "@/lib/supabase-config";
 /**
  * 会員数の集計（管理者向け）。
  * 会員＝Supabase の登録ユーザー。件数は auth.users から数える（service role キーが必要）。
- * 画面には「園名・登録日・メール確認済みか」だけを出す。メールアドレスや担当者名は出さない。
+ * 画面には「園名・メールアドレス・担当者名・登録日・メール確認済みか」を出す（管理者のみ。個人情報を含む）。
  */
 
-export type Member = { orgName: string; createdAt: string; confirmed: boolean };
+export type Member = {
+  orgName: string;
+  email: string | null;
+  contactName: string | null;
+  createdAt: string;
+  confirmed: boolean;
+};
 export type MemberSummary = { total: number; confirmed: number; members: Member[] };
 
 export const NO_SERVICE_KEY = "NO_SERVICE_KEY";
@@ -23,6 +29,7 @@ export function isAdminEmail(email: string | null | undefined, list: string | un
 }
 
 type RawUser = {
+  email?: string | null;
   email_confirmed_at?: string | null;
   confirmed_at?: string | null;
   created_at: string;
@@ -33,8 +40,11 @@ export function summarizeUsers(users: RawUser[]): MemberSummary {
   const members: Member[] = users
     .map((u) => {
       const org = u.user_metadata?.organization_name;
+      const contact = u.user_metadata?.contact_name;
       return {
         orgName: typeof org === "string" && org.trim() ? org.trim() : "（園名なし）",
+        email: u.email ?? null,
+        contactName: typeof contact === "string" && contact.trim() ? contact.trim() : null,
         createdAt: u.created_at,
         confirmed: Boolean(u.email_confirmed_at ?? u.confirmed_at),
       };

@@ -14,15 +14,19 @@ console.log("ok 管理者の判定");
 
 // 集計
 const s = summarizeUsers([
-  { created_at: "2026-10-01T00:00:00Z", email_confirmed_at: "2026-10-01T01:00:00Z", user_metadata: { organization_name: " さくら保育園 ", contact_name: "非表示" } },
+  { created_at: "2026-10-01T00:00:00Z", email: "sakura@example.jp", email_confirmed_at: "2026-10-01T01:00:00Z", user_metadata: { organization_name: " さくら保育園 ", contact_name: " 山田花子 " } },
   { created_at: "2026-11-05T00:00:00Z", email_confirmed_at: null, user_metadata: {} },
   { created_at: "2026-10-20T00:00:00Z", confirmed_at: "2026-10-20T01:00:00Z", user_metadata: { organization_name: "ひまわり園" } },
 ]);
 assert.equal(s.total, 3);
 assert.equal(s.confirmed, 2);
 assert.deepEqual(s.members.map((m) => m.orgName), ["（園名なし）", "ひまわり園", "さくら保育園"], "新しい順・空白除去・園名なしの補完");
-assert.ok(!JSON.stringify(s).includes("非表示"), "担当者名を出さない");
-assert.ok(!JSON.stringify(s).includes("@"), "メールを出さない");
+const sakura = s.members.find((m) => m.orgName === "さくら保育園")!;
+assert.equal(sakura.email, "sakura@example.jp", "メールアドレスを持つ");
+assert.equal(sakura.contactName, "山田花子", "担当者名を持つ（前後の空白を除く）");
+const none = s.members.find((m) => m.orgName === "（園名なし）")!;
+assert.equal(none.email, null, "メールがなければ null");
+assert.equal(none.contactName, null, "担当者名がなければ null");
 assert.equal(summarizeUsers([]).total, 0);
-console.log("ok 集計（件数・確認済み・並び順・個人情報を出さない）");
+console.log("ok 集計（件数・確認済み・並び順・メール・担当者）");
 console.log("\n全2件 合格");

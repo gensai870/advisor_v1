@@ -57,6 +57,8 @@ export default async function AdminMembersPage() {
                 <thead>
                   <tr className="text-xs text-ink-soft">
                     <th className="p-2">園名</th>
+                    <th className="p-2">メールアドレス</th>
+                    <th className="p-2">担当者</th>
                     <th className="p-2">登録日</th>
                     <th className="p-2">メール確認</th>
                   </tr>
@@ -65,14 +67,16 @@ export default async function AdminMembersPage() {
                   {summary.members.map((m, i) => (
                     <tr key={i} className="border-t border-black/5">
                       <td className="p-2">{m.orgName}</td>
-                      <td className="p-2">{fmt(m.createdAt)}</td>
+                      <td className="p-2 break-all">{m.email ?? "—"}</td>
+                      <td className="p-2">{m.contactName ?? "—"}</td>
+                      <td className="p-2 whitespace-nowrap">{fmt(m.createdAt)}</td>
                       <td className="p-2">{m.confirmed ? "済" : "未"}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-ink-soft">メールアドレスや担当者名は表示しません。</p>
+            <p className="text-xs text-ink-soft">メールアドレス・担当者名を含む個人情報です。管理者以外には見せないでください。</p>
           </>
         )}
       </div>
