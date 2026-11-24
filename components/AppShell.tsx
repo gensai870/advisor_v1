@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import Logo from "./Logo";
 import UsageIndicator from "./UsageIndicator";
+import { createClient } from "@/lib/supabase-browser";
 
 const NAV_ITEMS = [
   { href: "/home", label: "ホーム", icon: Home },
@@ -99,6 +100,24 @@ function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  // 登録園名（会員登録時の organization_name）。undefined=取得中、null=未登録
+  const [orgName, setOrgName] = useState<string | null | undefined>(undefined);
+
+  useEffect(() => {
+    let alive = true;
+    createClient()
+      .auth.getUser()
+      .then(({ data }) => {
+        const org = data.user?.user_metadata?.organization_name;
+        if (alive) setOrgName(typeof org === "string" && org.trim() ? org.trim() : null);
+      })
+      .catch(() => {
+        if (alive) setOrgName(null);
+      });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -137,7 +156,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-mint text-sm">🧑‍🏫</span>
             <div className="hidden text-xs leading-tight sm:block">
               <div className="font-medium text-ink">先生</div>
-              <div className="text-ink-soft">幼稚園・保育園</div>
+              <div className="max-w-[12rem] truncate text-ink-soft" title={orgName ?? undefined}>
+                {orgName === undefined ? "\u00a0" : orgName ?? "幼稚園・保育園"}
+              </div>
             </div>
             <ChevronDown size={14} className="text-ink-soft" />
           </div>
