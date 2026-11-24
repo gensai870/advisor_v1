@@ -27,6 +27,7 @@ import {
 import Logo from "./Logo";
 import UsageIndicator from "./UsageIndicator";
 import { createClient } from "@/lib/supabase-browser";
+import OrgNameSlot from "./OrgNameSlot";
 
 const NAV_ITEMS = [
   { href: "/home", label: "ホーム", icon: Home },
@@ -156,9 +157,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-mint text-sm">🧑‍🏫</span>
             <div className="hidden text-xs leading-tight sm:block">
               <div className="font-medium text-ink">先生</div>
-              <div className="max-w-[12rem] truncate text-ink-soft" title={orgName ?? undefined}>
-                {orgName === undefined ? "\u00a0" : orgName ?? "幼稚園・保育園"}
-              </div>
+              <OrgNameSlot orgName={orgName} onSaved={setOrgName} />
             </div>
             <ChevronDown size={14} className="text-ink-soft" />
           </div>
