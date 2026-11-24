@@ -85,7 +85,9 @@ function LoginPageInner() {
         router.push("/home");
         router.refresh();
       } else {
-        setMessage("確認メールを送信しました。メール内のリンクからログインを完了してください。");
+        setMessage(
+          "確認メールを送信しました。メール内のリンクからログインを完了してください。\n＊1時間以内にご確認をお願いします（1時間を過ぎた場合は、再度ご登録をお願いします）"
+        );
       }
     }
   }
@@ -216,7 +218,7 @@ function LoginPageInner() {
           </div>
 
           {error && <p className="mt-3 text-xs font-medium text-coral">{error}</p>}
-          {message && <p className="mt-3 text-xs font-medium text-emerald-600">{message}</p>}
+          {message && <p className="mt-3 whitespace-pre-line text-xs font-medium text-emerald-600">{message}</p>}
 
           <button
             type="submit"
